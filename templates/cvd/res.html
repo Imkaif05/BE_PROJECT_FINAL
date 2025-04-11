@@ -1,0 +1,171 @@
+{% load static %}
+{% block maincontent %}
+<!--inner banner-->
+{% if messages %}
+<div class="alert alert-success text-center" id="alert-msg">
+  {% for message in messages %}
+  <h3>{{ message }}</h3>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HeartBitz | E-HealthCare</title>
+  {% include 'partials/_css.html' %}
+</head>
+<style>
+  .chart-img {
+    transition: transform 0.3s ease;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+  }
+
+  .chart-img:hover {
+    transform: scale(1.02);
+  }
+
+  .legend-box {
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .color-box {
+    border-radius: 4px;
+  }
+
+  .bg-light {
+    background-color: #f8f9fa;
+}
+
+.rounded-lg {
+    border-radius: 12px;
+}
+
+.p-4 {
+    padding: 16px;
+}
+
+.mb-5 {
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+p {
+    font-size: 18px;
+    color: #555;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+strong {
+    color: #222;
+}
+
+.ant {
+    display: block;
+    text-align: center;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    transition: 0.3s ease-in-out;
+}
+
+
+
+</style>
+
+<body>
+  <!--Wrapper Start-->
+  <div class="wrapper">
+    <!--Header Start-->
+    {% load static %}
+    <header class="site-header">
+      <div class="nav-logo-area" style="background-color: #f9f9f9">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <nav class="navbar navbar-default">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle
+                      navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
+                      class="icon-bar"></span> </button>
+                  <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'heartcare/images/logom.png' %}"
+                      width="170vh" height="40vh" alt=""></a>
+                  <ul class="nav navbar-nav">
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                  </ul>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{% url 'cvd' %}">CVD prediction</a></li>
+                    <li> <a id="menu-toggle" href="#" class="toggle"><img src="{% static 'heartcare/images/bars.png' %}"
+                          alt=""></a> </li>
+                  </ul>
+                </div>
+            </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+  </div>
+  </header>
+  <!--inner banner End-->
+  <div class="inner-banner">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7">
+          <h1>Result</h1>
+        </div>
+        <div class="col-md-5">
+          <ol class="breadcrumb">
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li class="active">Eye_Result</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Start -->
+  <!-- Inside the Visualization Section -->
+  <section class="bg-light rounded-lg p-4 mb-5">
+    <h2>Prediction Result</h2>
+    <p><strong>Predicted Condition:</strong> {{ label }}</p>
+    <p><strong>Confidence:</strong> {{ confidence|floatformat:2 }}%</p>
+    <p><strong>Heart Disease Probability:</strong> {{ heart_disease_probability }}%</p>
+    <a class="ant" href="{% url 'cvd' %}">Another image</a>
+  </section>
+
+
+</body>
+
+</html>
+{% endblock maincontent %}
+
+<!--Footer Start-->
+{% include 'partials/_footer.html' %}
+<!--Footer End-->
+{% include 'partials/_js.html' %}

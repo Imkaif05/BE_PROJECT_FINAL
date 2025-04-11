@@ -1,0 +1,172 @@
+{% load static %}
+{% block maincontent %}
+<!--inner banner-->
+{% if messages %}
+<div class="alert alert-success text-center" id="alert-msg">
+  {% for message in messages %}
+  <h3>{{ message }}</h3>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HeartBitz | E-HealthCare</title>
+  {% include 'partials/_css.html' %}
+</head>
+<style>
+  .chart-img {
+    transition: transform 0.3s ease;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+  }
+
+  .chart-img:hover {
+    transform: scale(1.02);
+  }
+
+  .legend-box {
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .color-box {
+    border-radius: 4px;
+  }
+</style>
+
+<body>
+  <!--Wrapper Start-->
+  <div class="wrapper">
+    <!--Header Start-->
+    {% load static %}
+    <header class="site-header">
+      <div class="nav-logo-area" style="background-color: #f9f9f9">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <nav class="navbar navbar-default">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle
+                      navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
+                      class="icon-bar"></span> </button>
+                  <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'heartcare/images/logom.png' %}"
+                      width="170vh" height="40vh" alt=""></a>
+                  <ul class="nav navbar-nav">
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                  </ul>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{% url 'cvd' %}">CVD prediction</a></li>
+                    <li> <a id="menu-toggle" href="#" class="toggle"><img src="{% static 'heartcare/images/bars.png' %}"
+                          alt=""></a> </li>
+                  </ul>
+                </div>
+            </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+  </div>
+  </header>
+  <!--inner banner End-->
+  <div class="inner-banner">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7">
+          <h1>Result</h1>
+        </div>
+        <div class="col-md-5">
+          <ol class="breadcrumb">
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li class="active">Result</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Start -->
+  <!-- Inside the Visualization Section -->
+  <section class="bg-light rounded-lg p-4 mb-5">
+    {% if result %}
+    <h2 style="padding-left: 5%; padding-top: 2%;">Prediction Result : </h2>
+    <h2 style="padding-left: 10%; padding-bottom: 2%;">{{ result }}</h2>
+    {% endif %}
+    <!-- <h3 class="text-center mb-4 text-secondary" style="padding-bottom: 2%;">Health Analysis Visualizations</h3> -->
+    
+    {% if recommendations %}
+    <div class="card mb-4 shadow-sm" style="padding-left: 3%; width: 90%; padding-bottom: 1%;">
+      <div class="card-header bg-success text-white" style="padding: 0.5%;">
+        <h5 class="mb-0">Personalized Recommendations</h5>
+      </div>
+      <div class="card-body">
+      <ul class="list-group">
+        {% for recommendation in recommendations %}
+        <li class="list-group-item">{{ recommendation }}</li>
+        {% endfor %}
+      </ul>
+      </div>
+    </div>
+    {% endif %}
+    <!-- Risk Level -->
+    <div class="card mb-4 shadow-sm" style="padding-left: 3%; width: 90%; padding-bottom: 1%;">
+      <div class="card-header bg-primary text-white" style="padding: 0.5%;">
+        <h5 class="mb-0">Risk Level Indicator</h5>
+      </div>
+      <div class="card-body">
+        <img src="{{ chart_urls.risk_gauge }}" alt="Risk Gauge" class="img-fluid rounded mx-auto d-block"
+          style="max-height: 300px;">
+      </div>
+    </div>
+
+    <div class="card mb-4 shadow-sm" style="padding-left: 3%; width: 90%; padding-bottom: 1%;">
+      <div class="card-header bg-primary text-white" style="padding: 0.5%;">
+        <h5 class="mb-0">Cholesterol &amp; BP Analysis</h5>
+      </div>
+      <div class="card-body">
+        <img src="{{ chart_urls.chol_bp_chart }}" alt="Risk Gauge" class="img-fluid rounded mx-auto d-block"
+          style="max-height: 360px;">
+      </div>
+    </div>
+
+    <div class="card mb-4 shadow-sm" style="padding-left: 3%; width: 90%; padding-bottom: 1%;">
+      <div class="card-header bg-primary text-white" style="padding: 0.5%;">
+        <h5 class="mb-0">Comparison with Normal Values</h5>
+      </div>
+      <div class="card-body">
+        <img src="{{ chart_urls.comparison_bar }}" alt="Risk Gauge" class="img-fluid rounded mx-auto d-block"
+          style="max-height: 360px;">
+      </div>
+    </div>
+
+    <div class="card mb-4 shadow-sm" style="padding-left: 3%; width: 90%; padding-bottom: 1%;">
+      <div class="card-header bg-primary text-white" style="padding: 0.5%;">
+        <h5 class="mb-0">Heart Rate vs Oldpeak</h5>
+      </div>
+      <div class="card-body">
+        <img src="{{ chart_urls.hr_oldpeak_chart }}" alt="Risk Gauge" class="img-fluid rounded mx-auto d-block"
+          style="max-height: 400px;">
+      </div>
+    </div>
+
+  </section>
+
+
+</body>
+
+</html>
+{% endblock maincontent %}
+
+<!--Footer Start-->
+{% include 'partials/_footer.html' %}
+<!--Footer End-->
+{% include 'partials/_js.html' %}
