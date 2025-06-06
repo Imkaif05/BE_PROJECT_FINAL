@@ -4,6 +4,62 @@ from django.contrib import messages
 from .models import Slider, Service, Doctor, Faq, Gallery
 from django.views.generic import ListView, DetailView, TemplateView
 
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from .forms import RegisterForm, LoginForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+
+
+def register_view(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password1')
+
+            # Create user with email as username
+            user = User.objects.create_user(username=email, email=email, password=password)
+            user.save()
+
+            messages.success(request, 'Registration successful. Please log in.')
+            return redirect('login')  # redirect to login page
+        else:
+            messages.error(request, 'Registration failed. Please correct the errors.')
+    else:
+        form = RegisterForm()
+
+    return render(request, 'hospital/register.html', {'form': form})
+
+
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request, data=request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+
+            # Authenticate with email as username
+            user = authenticate(request, username=email, email=email, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, f'Welcome back, {user.email}!')
+                return redirect('index')  # change to your home view
+            else:
+                messages.error(request, 'Invalid email or password.')
+        else:
+            messages.error(request, 'Form validation failed.')
+    else:
+        form = LoginForm()
+
+    return render(request, 'hospital/login.html', {'form': form})
+
+
+@login_required
+def logout_view(request):
+    logout(request)
+    messages.success(request, 'You have been logged out.')
+    return redirect('login')
 
 class HomeView(ListView):
     template_name = 'hospital/index.html'

@@ -227,7 +227,7 @@
 <!--Main Content Start-->
 <div class="main-content padding-0">
   <section class="appointment-form">
-    {% comment %} <div class="text-center" style="">
+    {% comment %} <div class="text-center">
       <button onclick="toggleForms('data')" class="btn btn-danger" style="margin-right: 3%; padding: 0.7%;">Predict via Patient Data</button>
       <button onclick="toggleForms('image')" class="btn btn-danger" style="margin-left: 3%; padding: 0.7%;">Predict via Eye Image</button>
     </div> {% endcomment %}
@@ -414,11 +414,11 @@
         </div>
       </div>
 
-      <div id="image-form" style="display: none">
+      <!-- <div id="image-form" style="display: none">
         
           <input type="submit" value="Predict" />
         </form>
-      </div>
+      </div> -->
 
       <div class="h-divider"></div>
 
@@ -559,7 +559,7 @@
       </div>
     </div>
 
-    <div class="ftd">
+    <div class="ftd active" id="image-form">
       <h2 style="font-size: 22px; font-weight: bold; color: #333; margin-bottom: 15px;">
           Upload Eye Fundus Image
       </h2>
@@ -771,13 +771,13 @@
       </div>
 
       <div class="col-md-6 col-sm-6">
-        <div class="welcome-img" style="margin-bottom: 10vh">
+        <div class="welcome-img" style="margin-bottom: 10vh;">
           <img
-            src="{% static 'heartcare/images/fqimg.png' %}"
+            src="{% static 'heartcare/images/fimg2.jpg' %}"
             style="
               margin-bottom: 5vh;
-              height: 78vh;
-              width: 76vh;
+              height: 65vh;
+              width: 75vh;
               align-items: center;
             "
             alt=""
