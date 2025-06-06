@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'hospital',
     'appointment',
     'cvd',
+    'crispy_forms',
 ]
 
 CSRF_TRUSTED_ORIGINS = ['https://heart.up.railway.app/', 'https://web-production-fc6eb.up.railway.app']

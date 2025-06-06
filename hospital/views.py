@@ -40,7 +40,7 @@ def login_view(request):
             password = form.cleaned_data.get('password')
 
             # Authenticate with email as username
-            user = authenticate(request, username=email, email=email, password=password)
+            user = authenticate(request, email=email, password=password)
             if user is not None:
                 login(request, user)
                 messages.success(request, f'Welcome back, {user.email}!')
