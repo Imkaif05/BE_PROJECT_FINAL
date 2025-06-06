@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'cvd',
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://heart.up.railway.app/']
+CSRF_TRUSTED_ORIGINS = ['https://heart.up.railway.app/', 'https://web-production-fc6eb.up.railway.app']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
